@@ -31,6 +31,8 @@ import com.minar.birday.R
 import com.minar.birday.activities.MainActivity
 import com.minar.birday.adapters.ContactsFilterArrayAdapter
 import com.minar.birday.databinding.BottomSheetInsertEventBinding
+import com.minar.birday.model.ActivationCode
+import com.minar.birday.model.ActivationType
 import com.minar.birday.model.ContactInfo
 import com.minar.birday.model.Event
 import com.minar.birday.model.EventCode
@@ -101,6 +103,7 @@ class InsertEventBottomSheet(
         val negativeButton = binding.negativeButton
         val eventImage = binding.imageEvent
         var typeValue = EventCode.BIRTHDAY.name
+        var activationTypeValue = ActivationCode.ACTIVATE.name
         positiveButton.isEnabled = false
 
         if (event != null) {
@@ -118,6 +121,18 @@ class InsertEventBottomSheet(
             val surname = binding.surnameEvent
             val eventDate = binding.dateEvent
             val countYear = binding.countYearSwitch
+            val activation_status = binding.ActivationStatusLayout
+            val surname_layout = binding.surnameEventLayout
+
+            println("status_insu "+typeValue)
+            if(typeValue == "VEHICLE_INSURANCE"){
+                surname_layout.visibility=View.GONE
+                activation_status.visibility=View.VISIBLE
+            }else{
+                activation_status.visibility=View.GONE
+                surname_layout.visibility=View.VISIBLE
+            }
+
             type.setText(typeValue, false)
             name.setText(nameValue)
             surname.setText(surnameValue)
@@ -173,6 +188,7 @@ class InsertEventBottomSheet(
         val surname = binding.surnameEvent
         val eventDate = binding.dateEvent
         val countYear = binding.countYearSwitch
+        val activation_type = binding.ActivationEvent
 
         // Set the dropdown to show the available event types
         val items = getAvailableTypes(act)
@@ -188,11 +204,28 @@ class InsertEventBottomSheet(
                         countYear.isChecked = false
                         countYear.isEnabled = false
                         countYearValue = false
-                    } else {
+
+                        binding.surnameEventLayout.visibility = View.VISIBLE
+                        binding.ActivationStatusLayout.visibility = View.GONE
+                        binding.nameEventLayout.hint=getString(R.string.insert_name_hint)
+                    } else if(typeValue == EventCode.VEHICLE_INSURANCE.name){
+                        binding.surnameEventLayout.visibility = View.GONE
+                        binding.ActivationStatusLayout.visibility = View.VISIBLE
+                        binding.nameEventLayout.hint=getString(R.string.insert_vehicle_name)
+
+                        binding.ActivationEvent.setText(activationTypeValue, false)
+
+                    }
+                    else {
                         countYear.isChecked = true
                         countYear.isEnabled = true
                         countYearValue = true
+
+                        binding.surnameEventLayout.visibility = View.VISIBLE
+                        binding.ActivationStatusLayout.visibility = View.GONE
+                        binding.nameEventLayout.hint=getString(R.string.insert_name_hint)
                     }
+
                     if (!imageChosen)
                         eventImage.setImageDrawable(
                             ContextCompat.getDrawable(
@@ -203,10 +236,30 @@ class InsertEventBottomSheet(
                                     EventCode.ANNIVERSARY.name -> R.drawable.placeholder_anniversary_image
                                     EventCode.DEATH.name -> R.drawable.placeholder_death_image
                                     EventCode.NAME_DAY.name -> R.drawable.placeholder_name_day_image
+                                    EventCode.VEHICLE_INSURANCE.name -> R.drawable.placeholder_vehicle_image
                                     else -> R.drawable.placeholder_other_image
                                 }
                             )
                         )
+
+                }
+        }
+
+        // Set the dropdown to show the activation status
+        val status_items = getActivationStatus(act)
+        val activation_Adapter = ArrayAdapter(act, R.layout.event_type_list_item, status_items)
+        with(activation_type) {
+            setAdapter(activation_Adapter)
+            setText(getStringForActivationTypeCodename(context, typeValue), false)
+            onItemClickListener =
+                AdapterView.OnItemClickListener { _, _, position, _ ->
+                    typeValue = items[position].codeName.name
+                    // Automatically uncheck "the year matters" for name days
+                    if (typeValue == ActivationCode.ACTIVATE.name) {
+
+                    } else {
+
+                    }
                 }
         }
 
@@ -293,14 +346,15 @@ class InsertEventBottomSheet(
                         eventDateValue = LocalDate.of(year, month, day)
                         val todayDate = LocalDate.now()
 
-                        // Force the date to be max one day after today, to consider different time zones
+                        /*// Force the date to be max one day after today, to consider different time zones
                         while (eventDateValue.isAfter(todayDate.plusDays(1))) {
                             eventDateValue = LocalDate.of(
-                                todayDate.year - 1,
+                                eventDateValue.year,
                                 eventDateValue.monthValue,
                                 eventDateValue.dayOfMonth
                             )
-                        }
+                        }*/
+
                         eventDate.setText(eventDateValue.format(formatter))
                         // The last selected date is saved if the dialog is reopened
                         lastDate.set(eventDateValue.year, month - 1, day)

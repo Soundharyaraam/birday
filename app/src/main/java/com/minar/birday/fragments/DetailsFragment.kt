@@ -133,6 +133,7 @@ class DetailsFragment : Fragment() {
                             EventCode.ANNIVERSARY.name -> R.drawable.placeholder_anniversary_image
                             EventCode.DEATH.name -> R.drawable.placeholder_death_image
                             EventCode.NAME_DAY.name -> R.drawable.placeholder_name_day_image
+                            EventCode.VEHICLE_INSURANCE.name -> R.drawable.placeholder_vehicle_image
                             else -> R.drawable.placeholder_other_image
                         }
                     )

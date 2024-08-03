@@ -2,6 +2,8 @@ package com.minar.birday.utilities
 
 import android.content.Context
 import com.minar.birday.R
+import com.minar.birday.model.ActivationCode
+import com.minar.birday.model.ActivationType
 import com.minar.birday.model.Event
 import com.minar.birday.model.EventCode
 import com.minar.birday.model.EventResult
@@ -222,7 +224,16 @@ fun getAvailableTypes(context: Context): List<EventType> {
         EventType(EventCode.ANNIVERSARY, context.getString(R.string.anniversary)),
         EventType(EventCode.DEATH, context.getString(R.string.death_anniversary)),
         EventType(EventCode.NAME_DAY, context.getString(R.string.name_day)),
+        EventType(EventCode.VEHICLE_INSURANCE, context.getString(R.string.vehicle_insurance)),
         EventType(EventCode.OTHER, context.getString(R.string.other)),
+    )
+}
+
+//Return vehicle Activation type
+fun getActivationStatus(context: Context): List<ActivationType> {
+    return listOf(
+        ActivationType(ActivationCode.ACTIVATE, context.getString(R.string.activate)),
+        ActivationType(ActivationCode.DEACTIVATE, context.getString(R.string.de_activate)),
     )
 }
 
@@ -234,7 +245,20 @@ fun getStringForTypeCodename(context: Context, codename: String): String {
             EventCode.ANNIVERSARY -> context.getString(R.string.anniversary)
             EventCode.DEATH -> context.getString(R.string.death_anniversary)
             EventCode.NAME_DAY -> context.getString(R.string.name_day)
+            EventCode.VEHICLE_INSURANCE -> context.getString(R.string.vehicle_insurance)
             EventCode.OTHER -> context.getString(R.string.other)
+        }
+    } catch (e: Exception) {
+        context.getString(R.string.unknown)
+    }
+}
+
+// Given a string, returns the corresponding translated activation type, if any
+fun getStringForActivationTypeCodename(context: Context, codename: String): String {
+    return try {
+        when (ActivationCode.valueOf(codename.uppercase())) {
+            ActivationCode.ACTIVATE -> context.getString(R.string.activate)
+            ActivationCode.DEACTIVATE -> context.getString(R.string.de_activate)
         }
     } catch (e: Exception) {
         context.getString(R.string.unknown)

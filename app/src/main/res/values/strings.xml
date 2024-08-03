@@ -163,6 +163,14 @@
     <string name="festivity">Festivity</string>
     <string name="name_day">Name day</string>
     <string name="other">Other</string>
+
+    <string name="select_activation_status">Select Activation Status</string>
+    <string name="activate">Activate</string>
+    <string name="de_activate">De-Activate</string>
+
+    <string name="vehicle_insurance">Vehicle Insurance</string>
+    <string name="insert_vehicle_name">Insert Vehicle Name</string>
+
     <!-- Event actions -->
     <string name="event_actions">Actions</string>
     <string name="event_actions_description">Here you can change or remove this event!</string>

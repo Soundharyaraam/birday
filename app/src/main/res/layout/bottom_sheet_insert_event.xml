@@ -224,6 +224,45 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Activation_Status_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/form_vertical_margin"
+                android:visibility="gone"
+                android:hint="@string/select_activation_status"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/text_field_corner"
+                app:boxCornerRadiusBottomStart="@dimen/text_field_corner"
+                app:boxCornerRadiusTopEnd="@dimen/text_field_corner"
+                app:boxCornerRadiusTopStart="@dimen/text_field_corner"
+                app:boxStrokeErrorColor="@color/redError"
+                app:errorContentDescription="@string/insert_surname_hint"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_alert_24dp"
+                app:errorIconTint="?attr/colorPrimary"
+                app:errorTextColor="?attr/colorPrimary"
+                app:hintAnimationEnabled="true"
+                app:hintTextColor="?attr/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dateEventLayout"
+                app:startIconDrawable="@drawable/ic_settings_24dp"
+                app:startIconTint="?attr/colorOutline">
+
+                <AutoCompleteTextView
+                    android:id="@+id/Activation_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="none"
+                    android:padding="0dp"
+                    android:textCursorDrawable="@drawable/custom_cursor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/countYearSwitch"
                 android:layout_width="wrap_content"
@@ -239,7 +278,7 @@
                 android:textColor="?attr/colorOutline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dateEventLayout"
+                app:layout_constraintTop_toBottomOf="@id/Activation_Status_layout"
                 app:switchPadding="@dimen/text_switch_padding"
                 app:switchTextAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
